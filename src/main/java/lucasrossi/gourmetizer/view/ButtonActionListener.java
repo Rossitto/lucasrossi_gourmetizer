@@ -9,11 +9,23 @@ import lucasrossi.gourmetizer.model.Prato;
 import lucasrossi.gourmetizer.service.PratoService;
 import lucasrossi.gourmetizer.util.SimOuNao;
 
+/**
+ * JFrame: tratamento do botão "Já pensei!", que originalmente era "Ok"
+ * 
+ * @author Lucas Rossi
+ */
 public class ButtonActionListener implements ActionListener {
 
     private PratoService pratoService = new PratoService();
     private Prato pratoSelecionado = null;
 
+    /**
+     * Pergunta para o jogador se o prato que ele pensou "é um" adjetivo da lista de
+     * pratos, se sim, pergunta se é o prato. Se não, continua percorrendo os
+     * adjetivos da lista de pratos, até esvaziar, então pergunta o nome do prato
+     * (text input do usuário), e seu adjetivo. A última pergunta antes de perguntar
+     * o nome do prato sempre é o Bolo de Chocolate.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -33,6 +45,10 @@ public class ButtonActionListener implements ActionListener {
 
     }
 
+    /**
+     * Sempre é a última pergunta. Se não for o bolo, o usuário poderá escrever o
+     * nome do prato.
+     */
     private void exibePerguntaBoloChocolate() {
         Prato boloDeChocolate = new Prato("Bolo de chocolate");
 
@@ -41,6 +57,12 @@ public class ButtonActionListener implements ActionListener {
         checkPergunta(exibePergunta(boloDeChocolate.getNome()));
     }
 
+    /**
+     * Checa se acertou o prato. Se sim -> exibe mensagem de sucesso. Se não -> novo
+     * prato é criado.
+     * 
+     * @param simOuNao
+     */
     private void checkPergunta(SimOuNao simOuNao) {
         if (simOuNao == SimOuNao.SIM) {
             exibeMensagemSucesso();
@@ -49,15 +71,26 @@ public class ButtonActionListener implements ActionListener {
         }
     }
 
+    /**
+     * Pergunta se é algum prato da lista
+     * 
+     * @param pratoInfo
+     * @return
+     */
     private SimOuNao exibePergunta(String pratoInfo) {
-        return SimOuNao.getByCodigo(JOptionPane.showConfirmDialog(null,
-                "O prato que você pensou é ".concat(pratoInfo).concat("?"), "Confirm", JOptionPane.YES_NO_OPTION));
+        Object[] options = { "Sim", "Não" };
+        return SimOuNao.getByCodigo(
+                JOptionPane.showOptionDialog(null, "O prato que você pensou é ".concat(pratoInfo).concat("?"),
+                        "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
     }
 
     private void exibeMensagemSucesso() {
         JOptionPane.showMessageDialog(null, "Acertei de novo!");
     }
 
+    /**
+     * Cria novo prato com as infos inputadas pelo usuário (nome do prato e ajetivo)
+     */
     private void criaNovoPrato() {
         // String nome = JOptionPane.showInputDialog("Em qual prato você pensou?");
         String nome = JOptionPane.showInputDialog(null, "Em qual prato vocë pensou?", "Desisto",

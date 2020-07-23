@@ -1,5 +1,11 @@
 package lucasrossi.gourmetizer.util;
 
+/**
+ * Ao usuário clicar SIM ou NÃO, códigos 0 ou 1
+ * 
+ * @author Lucas Rossi
+ * 
+ */
 public enum SimOuNao {
     SIM(0), NAO(1);
 

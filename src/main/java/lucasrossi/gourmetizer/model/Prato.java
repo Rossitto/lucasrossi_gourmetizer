@@ -1,5 +1,10 @@
 package lucasrossi.gourmetizer.model;
 
+/**
+ * Domain class referente ao prato
+ * 
+ * @author Lucas Rossi
+ */
 public class Prato {
 
     private String nome;

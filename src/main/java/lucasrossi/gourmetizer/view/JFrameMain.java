@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe MAIN
+ */
 public class JFrameMain {
 
     private static GraphicsConfiguration graphicsConf;
@@ -14,6 +17,9 @@ public class JFrameMain {
 
     public static void main(String[] args) {
 
+        /**
+         * Configurações do Frame
+         */
         JFrame frame = new JFrame(graphicsConf);
         frame.setTitle("JOGO GOURMET !");
         frame.setSize(300, 150);
