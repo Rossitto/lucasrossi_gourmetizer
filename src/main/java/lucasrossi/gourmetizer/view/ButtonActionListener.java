@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import lucasrossi.gourmetizer.model.Prato;
 import lucasrossi.gourmetizer.service.PratoService;
-import lucasrossi.gourmetizer.util.SimOuNao;
 
 /**
  * JFrame: tratamento do botão "Já pensei!", que originalmente era "Ok"
@@ -32,9 +31,9 @@ public class ButtonActionListener implements ActionListener {
         for (Prato prato : pratoService.obterPratos()) {
             this.pratoSelecionado = prato;
 
-            SimOuNao existeAdjetivo = exibePergunta(prato.getAdjetivo());
+            Boolean existeAdjetivo = exibePergunta(prato.getAdjetivo());
 
-            if (existeAdjetivo == SimOuNao.SIM) {
+            if (existeAdjetivo == true) {
                 checkPergunta(exibePergunta(prato.getNome()));
                 return;
             }
@@ -63,10 +62,10 @@ public class ButtonActionListener implements ActionListener {
      * 
      * @param simOuNao
      */
-    private void checkPergunta(SimOuNao simOuNao) {
-        if (simOuNao == SimOuNao.SIM) {
+    private void checkPergunta(Boolean simOuNao) {
+        if (simOuNao == true) {
             exibeMensagemSucesso();
-        } else if (simOuNao == SimOuNao.NAO) {
+        } else if (simOuNao == false) {
             criaNovoPrato();
         }
     }
@@ -77,11 +76,15 @@ public class ButtonActionListener implements ActionListener {
      * @param pratoInfo
      * @return
      */
-    private SimOuNao exibePergunta(String pratoInfo) {
+    private Boolean exibePergunta(String pratoInfo) {
         Object[] options = { "Sim", "Não" };
-        return SimOuNao.getByCodigo(
-                JOptionPane.showOptionDialog(null, "O prato que você pensou é ".concat(pratoInfo).concat("?"),
-                        "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
+        // return SimOuNao.getByCodigo(
+        if (JOptionPane.showOptionDialog(null, "O prato que você pensou é ".concat(pratoInfo).concat("?"), "Confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]) == 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void exibeMensagemSucesso() {
